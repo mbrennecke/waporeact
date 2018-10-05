@@ -8,13 +8,18 @@ import Nav from "./components/Nav";
 const App = () => (
   <Router>
     <div>
-      <Nav />
+      <Nav color="navbar-dark bg-primary">
+		Washington Post Headlines
+	</Nav>
       <Switch>
         <Route exact path="/" component={Books} />
         <Route exact path="/books" component={Books} />
         <Route exact path="/books/:id" component={Detail} />
         <Route component={NoMatch} />
       </Switch>
+	  <Nav bottom="fixed-bottom" color="navbar-light bg-light">
+		<a href="https://newsapi.org" target="_blank">Powered by News API</a>
+	  </Nav>
     </div>
   </Router>
 );

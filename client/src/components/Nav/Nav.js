@@ -1,9 +1,9 @@
 import React from "react";
 
-const Nav = () => (
-  <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+const Nav = props => (
+  <nav className={`navbar navbar-expand-lg ${props.color} ${props.bottom}`}>
     <a className="navbar-brand" href="/">
-      React Reading List
+	{props.children}
     </a>
   </nav>
 );
