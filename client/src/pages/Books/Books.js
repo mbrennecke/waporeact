@@ -3,9 +3,10 @@ import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container, Card, Label } from "../../components/Grid";
+import { Col, Row, Container, Label } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { FormBtn, Input } from "../../components/Form"
+import { FormBtn, Input } from "../../components/Form";
+import Card from "../../components/Card";
 
 class Articles extends Component {
   state = {
@@ -98,6 +99,8 @@ class Articles extends Component {
                 Search
               </FormBtn>
             </form>
+			</Card>
+			<Card>
 			</Card>
             {this.state.articles.length ? (
               <List>

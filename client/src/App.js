@@ -18,7 +18,7 @@ const App = () => (
         <Route component={NoMatch} />
       </Switch>
 	  <Nav bottom="fixed-bottom" color="navbar-light bg-light">
-		<a href="https://newsapi.org" target="_blank">Powered by News API</a>
+		<a href="https://newsapi.org" target="_blank" rel="noopener">Powered by News API</a>
 	  </Nav>
     </div>
   </Router>
