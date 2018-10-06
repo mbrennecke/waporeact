@@ -2,8 +2,10 @@ import axios from "axios";
 
 export default {
   // Gets all articles
-  getArticles: function() {
-    return axios.get("/api/articles");
+  getArticles: function(articleData) {
+	  const topic = articleData.topic;
+	  console.log(topic);
+    return axios.get(`https://newsapi.org/v2/everything?q=${topic}&domains=wsj.com,nytimes.com&apiKey=c3729246d799406a84cde63905f0d328`);
   },
   // Gets the article with the given id
   getArticle: function(id) {
@@ -14,7 +16,5 @@ export default {
     return axios.delete("/api/articles/" + id);
   },
   // Saves a article to the database
-  saveArticle: function(articleData) {
-    return axios.get("https://newsapi.org/v2/everything?domains=wsj.com,nytimes.com&apiKey=c3729246d799406a84cde63905f0d328");
-  }
+
 };

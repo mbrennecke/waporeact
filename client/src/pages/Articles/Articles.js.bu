@@ -15,6 +15,24 @@ class Articles extends Component {
     endYear: ""
   };
 
+  componentDidMount() {
+    this.loadArticles();
+  }
+
+  loadArticles = () => {
+    API.getArticles()
+      .then(res =>
+        this.setState({ articles: res.data, topic: "", startYear: "", endYear: "" })
+      )
+      .catch(err => console.log(err));
+  };
+
+  deleteArticle = id => {
+    API.deleteArticle(id)
+      .then(res => this.loadArticles())
+      .catch(err => console.log(err));
+  };
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -25,7 +43,7 @@ class Articles extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.topic) {
-      API.getArticles({
+      API.saveArticle({
         topic: this.state.topic,
         startYear: this.state.startYear,
         endYear: this.state.endYear
