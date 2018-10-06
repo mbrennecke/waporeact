@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
+import DeleteBtn from "../../components/DeleteBtn";
+import SaveBtn from "../../components/SaveBtn";
 import { Link } from "react-router-dom";
 import { Col, Row, Container, Label } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
@@ -20,6 +22,20 @@ class Articles extends Component {
     this.setState({
       [name]: value
     });
+  };
+  
+    // Deletes a book from the database with a given id, then reloads books from the db
+  deleteArticle = id => {
+    API.deleteArticle(id)
+      .then(res => this.loadArticles())
+      .catch(err => console.log(err));
+  };
+    
+	// Deletes a book from the database with a given id, then reloads books from the db
+  saveArticle = id => {
+    API.saveArticle(id)
+      .then(res => this.loadArticles())
+      .catch(err => console.log(err));
   };
 
   handleFormSubmit = event => {
@@ -122,7 +138,19 @@ class Articles extends Component {
 				</Cardheader>
 				{this.state.articles.length ? (
 				  <List>
-
+					{this.state.articles.map(article => {
+					  return (
+						<ListItem key={article._id}>
+						  <a href={"/articles/" + article._id}>
+							<strong>
+							  {article.title} by {article.author}
+							</strong>
+						  </a>
+						  <SaveBtn onClick={() => this.saveArticle(article._id)} />
+						  <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
+						</ListItem>
+					  );
+					})}
 				  </List>
 				) : (
 				  <h3>No Saved Articles</h3>
