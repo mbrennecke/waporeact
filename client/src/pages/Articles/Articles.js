@@ -24,11 +24,21 @@ class Articles extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+	let startYear = this.state.startYear;
+	let endYear = this.state.endYear;
+	if (startYear) {
+		const startYearArr = startYear.split("/");
+		startYear = startYearArr[2] + "-" + startYearArr[0] + "-" + startYearArr[1];
+	}
+	if (endYear) {
+		const endYearArr = endYear.split("/");
+		endYear = endYearArr[2] + "-" + endYearArr[0] + "-" + endYearArr[1];
+	}
     if (this.state.topic) {
       API.getArticles({
         topic: this.state.topic,
-        startYear: this.state.startYear,
-        endYear: this.state.endYear
+        startYear: startYear,
+        endYear: endYear
       })
         .then(res => this.setState({articles: res.data.articles}))
         .catch(err => console.log(err));
@@ -59,22 +69,24 @@ class Articles extends Component {
 					placeholder="Topic (required)"
 				  />
 				  <Label>
-					Start Year
+					Start Date (last 30 days)
 					</Label>
 				  <Input
 					value={this.state.startYear}
 					onChange={this.handleInputChange}
 					name="startYear"
 					placeholder="ex. 2016"
+					type="date"
 				  />
 				  <Label>
-					End Year
+					End Date
 					</Label>
 				  <Input
 					value={this.state.endYear}
 					onChange={this.handleInputChange}
 					name="endYear"
 					placeholder="ex. 2018"
+					type="date"
 				  />
 				  <FormBtn
 					disabled={!(this.state.topic)}
