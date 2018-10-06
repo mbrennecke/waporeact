@@ -16,10 +16,14 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Article
-      .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			res.json(articleData);
+		}
+	  };
+	  xhttp.open("GET", "https://newsapi.org/v2/everything?domains=wsj.com,nytimes.com&apiKey=c3729246d799406a84cde63905f0d328", true);
+	  xhttp.send();
   },
   update: function(req, res) {
     db.Article

@@ -15,6 +15,6 @@ export default {
   },
   // Saves a article to the database
   saveArticle: function(articleData) {
-    return axios.post("/api/articles", articleData);
+    return axios.get("https://newsapi.org/v2/everything?domains=wsj.com,nytimes.com&apiKey=c3729246d799406a84cde63905f0d328");
   }
 };

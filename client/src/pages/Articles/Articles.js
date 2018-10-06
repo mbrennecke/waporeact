@@ -49,7 +49,7 @@ class Articles extends Component {
         startYear: this.state.startYear,
         endYear: this.state.endYear
       })
-        .then(res => this.loadArticles())
+        .then(res => this.setState({articles: res.data.articles}))
         .catch(err => console.log(err));
     }
   };
@@ -60,7 +60,7 @@ class Articles extends Component {
         <Row>
           <Col size="md-12 sm-12">
             <Jumbotron>
-              <h1 style= {{ fontSize: "3em"}}>Washington Post Article Scrubber</h1>
+              <h1 style= {{ fontSize: "3em"}}>World News Article Scrubber</h1>
 			  <h2>Search for and annotate articles of interest</h2>
             </Jumbotron>
 			<Card>
@@ -110,13 +110,12 @@ class Articles extends Component {
 				{this.state.articles.length ? (
 				  <List>
 					{this.state.articles.map(article => (
-					  <ListItem key={article._id}>
+					  <ListItem key={article.url}>
 						<Link to={"/articles/" + article._id}>
 						  <strong>
-							{article.topic}
+							{article.title}
 						  </strong>
 						</Link>
-						<DeleteBtn onClick={() => this.deleteArticle(article._id)} />
 					  </ListItem>
 					))}
 				  </List>
@@ -130,16 +129,7 @@ class Articles extends Component {
 				</Cardheader>
 				{this.state.articles.length ? (
 				  <List>
-					{this.state.articles.map(article => (
-					  <ListItem key={article._id}>
-						<Link to={"/articles/" + article._id}>
-						  <strong>
-							{article.topic}
-						  </strong>
-						</Link>
-						<DeleteBtn onClick={() => this.deleteArticle(article._id)} />
-					  </ListItem>
-					))}
+
 				  </List>
 				) : (
 				  <h3>No Saved Articles</h3>
