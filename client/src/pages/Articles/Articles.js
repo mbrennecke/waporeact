@@ -128,12 +128,12 @@ class Articles extends Component {
 					{this.state.articles.map((article, i) => {
 					  return (
 						<ListItem key={article.url}>
-						  <a href={"/articles/" + article._id}>
+						  <a href={"/articles/" + {article.url}}>
 							<strong>
 							  {article.title} by {article.author}
 							</strong>
 						  </a>
-						  <SaveBtn onClick={() => this.saveArticle(i)} id={i} />
+						  <SaveBtn onClick={() => this.saveArticle({i})} id={i} />
 						</ListItem>
 					  );
 					})}
