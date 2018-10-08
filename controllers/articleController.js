@@ -1,6 +1,6 @@
 const db = require("../models");
 
-// Defining methods for the booksController
+// Defining methods for the articlesController
 module.exports = {
   findAll: function(req, res) {
     db.Article
@@ -14,6 +14,9 @@ module.exports = {
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  create: function(req, res) {
+	console.log(req.body);
   },
   update: function(req, res) {
     db.Article

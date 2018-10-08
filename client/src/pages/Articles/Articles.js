@@ -16,7 +16,13 @@ class Articles extends Component {
     startYear: "",
     endYear: ""
   };
-
+  
+  componentDidMount() {
+    API.getArticles({topic: "US"})
+        .then(res => this.setState({articles: res.data.articles}))
+        .catch(err => console.log(err));
+  }
+  
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -33,7 +39,10 @@ class Articles extends Component {
     
 	// Deletes a book from the database with a given id, then reloads books from the db
   saveArticle = id => {
-    API.saveArticle(id)
+	  console.log(id)
+    API.saveArticle(
+		this.state.articles[id]
+	)
       .then(res => this.loadArticles())
       .catch(err => console.log(err));
   };
@@ -91,7 +100,6 @@ class Articles extends Component {
 					value={this.state.startYear}
 					onChange={this.handleInputChange}
 					name="startYear"
-					placeholder="ex. 2016"
 					type="date"
 				  />
 				  <Label>
@@ -101,7 +109,6 @@ class Articles extends Component {
 					value={this.state.endYear}
 					onChange={this.handleInputChange}
 					name="endYear"
-					placeholder="ex. 2018"
 					type="date"
 				  />
 				  <FormBtn
@@ -114,22 +121,25 @@ class Articles extends Component {
 			</Card>
 			<Card>
 				<Cardheader>
-					Results
+					Saved Articles
 				</Cardheader>
 				{this.state.articles.length ? (
 				  <List>
-					{this.state.articles.map(article => (
-					  <ListItem key={article.url}>
-						<Link to={"/articles/" + article._id}>
-						  <strong>
-							{article.title}
-						  </strong>
-						</Link>
-					  </ListItem>
-					))}
+					{this.state.articles.map((article, i) => {
+					  return (
+						<ListItem key={article.url}>
+						  <a href={"/articles/" + article._id}>
+							<strong>
+							  {article.title} by {article.author}
+							</strong>
+						  </a>
+						  <SaveBtn onClick={() => this.saveArticle(i)} id={i} />
+						</ListItem>
+					  );
+					})}
 				  </List>
 				) : (
-				  <h3>No Results to Display</h3>
+				  <h3>No Saved Articles</h3>
 				)}
 			</Card>
             <Card>
@@ -140,13 +150,12 @@ class Articles extends Component {
 				  <List>
 					{this.state.articles.map(article => {
 					  return (
-						<ListItem key={article._id}>
+						<ListItem key={article.url}>
 						  <a href={"/articles/" + article._id}>
 							<strong>
 							  {article.title} by {article.author}
 							</strong>
 						  </a>
-						  <SaveBtn onClick={() => this.saveArticle(article._id)} />
 						  <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
 						</ListItem>
 					  );
