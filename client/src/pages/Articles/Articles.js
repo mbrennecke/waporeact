@@ -39,9 +39,8 @@ class Articles extends Component {
     
 	// Deletes a book from the database with a given id, then reloads books from the db
   saveArticle = id => {
-	  console.log(id)
     API.saveArticle(
-		this.state.articles[id]
+		this.state.articles[id].url.split("/").pop().split(".").shift()
 	)
       .then(res => this.loadArticles())
       .catch(err => console.log(err));
@@ -134,7 +133,7 @@ class Articles extends Component {
 							  {article.title} by {article.author}
 							</strong>
 						  </a>
-						  <SaveBtn onClick={() => this.saveArticle({i})} id={i} />
+						  <SaveBtn onClick={() => this.saveArticle(i) } id={"art" + i}/>
 						</ListItem>
 					  );
 					})}
