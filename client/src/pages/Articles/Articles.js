@@ -126,9 +126,10 @@ class Articles extends Component {
 				{this.state.articles.length ? (
 				  <List>
 					{this.state.articles.map((article, i) => {
+						const url = article.url.split("/").pop().split(".").shift();
 					  return (
-						<ListItem key={article.url}>
-						  <a href={"/articles/" + {article.url}}>
+						<ListItem key={url + i}>
+						  <a href={"/articles/" + url}>
 							<strong>
 							  {article.title} by {article.author}
 							</strong>
